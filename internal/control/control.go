@@ -22,20 +22,21 @@ func expand(start, end rune) (expansion []rune) {
 	return
 }
 
-// Generates the character array from the source string.
-func Source(string1 string) (source []rune) {
-	runes := []rune(string1)
+// Generates the character array from a control string.
+func Parse(control string) (arr []rune) {
+	runes := []rune(control)
 	for i := 0; i < len(runes); i++ {
 		switch c := runes[i]; c {
 		case '-':
 			if i == 0 || i == len(runes)-1 {
-				source = append(source, c)
+				arr = append(arr, c)
 			} else {
-
+				arr = append(arr, expand(runes[i-1], runes[i+1])...)
+				i++
 			}
 		default:
-			source = append(source, c)
-		}
+			arr = append(arr, c)
 		}
 	}
+	return
 }
