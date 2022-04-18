@@ -53,3 +53,13 @@ func TestExpansion(t *testing.T) {
 		}
 	})
 }
+
+func TestParsing(t *testing.T) {
+	t.Run("ABCD shorthand", func(t *testing.T) {
+		got := string(Parse("[A-D]"))
+		want := "[ABCD]"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
+}
