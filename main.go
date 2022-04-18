@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"input"
 	"os"
 )
 
@@ -21,11 +22,11 @@ func init() {
 
 var complement = flag.Bool("c", false, "Complement the set of values specified by string1.")
 var delete = flag.Bool("d", false, "Delete all occurrences of input characters that are specified by string1.")
-var normalize = flag.Bool("s", false, "Replace instances of repeated characters with a single character.")
+var squeeze = flag.Bool("s", false, "Replace instances of repeated characters with a single character.")
 
 func main() {
 	flag.Parse()
-	fmt.Println(*complement, *delete, *normalize)
+	fmt.Println(*complement, *delete, *squeeze)
 	args := flag.Args()
 	//   cds n
 	// 0 000 2
@@ -37,11 +38,13 @@ func main() {
 	// 6 110 1
 	// 7 111 2
 	minArgs := 1
-	if !*delete && !*normalize || *delete && *normalize {
+	if !*delete && !*squeeze || *delete && *squeeze {
 		minArgs = 2
 	}
 	if len(args) < minArgs {
 		fmt.Println("Incorrect number of arguments.")
 		os.Exit(1)
 	}
+	chars := input.GetChars(os.Stdin)
+	fmt.Println(chars)
 }
