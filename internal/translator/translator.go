@@ -105,7 +105,7 @@ func (s *Squeezer) Translate(chars []rune) (translated []rune) {
 		translated = append(translated, chars[i])
 		if _, prs := s.m[chars[i]]; prs {
 			c := chars[i]
-			for chars[i+1] == c {
+			for i+1 < len(chars) && chars[i+1] == c {
 				i++
 			}
 		}

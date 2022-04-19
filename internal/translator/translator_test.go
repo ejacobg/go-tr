@@ -78,8 +78,16 @@ func TestDeleter(t *testing.T) {
 }
 
 func TestSqueezer(t *testing.T) {
-	t.Run("squeezer squeezes characters", func(t *testing.T) {})
-
+	t.Run("squeezer squeezes characters", func(t *testing.T) {
+		cs := CharSet("ab")
+		s := NewSqueezer(cs, nil)
+		got := string(s.Translate([]rune("bbbbaaaa")))
+		want := "ba"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
+	
 	t.Run("squeezer cannot squeeze", func(t *testing.T) {})
 }
 
