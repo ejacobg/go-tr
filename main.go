@@ -1,10 +1,12 @@
 package main
 
 import (
+	"control"
 	"flag"
 	"fmt"
 	"input"
 	"os"
+	"translator"
 )
 
 func init() {
@@ -38,13 +40,41 @@ func main() {
 	// 6 110 1
 	// 7 111 2
 	minArgs := 1
-	if !*delete && !*squeeze || *delete && *squeeze {
+	if *delete == *squeeze {
 		minArgs = 2
 	}
 	if len(args) < minArgs {
 		fmt.Println("Incorrect number of arguments.")
 		os.Exit(1)
 	}
-	chars := input.GetChars(os.Stdin)
-	fmt.Println(chars)
+
+	var string1, string2 translator.CharSet
+	string1 = control.Parse(args[0])
+	if *delete == *squeeze {
+		string2 = control.Parse(args[1])
+	}
+	if *complement {
+		string1 = string1.Complement()
+	}
+
+	var t translator.Translator
+	switch {
+	case *delete && *squeeze:
+		t = translator.NewDeleter(string1, t)
+		t = translator.NewSqueezer(string2, t)
+	case *delete:
+		t = translator.NewDeleter(string1, t)
+	case *squeeze:
+		t = translator.NewSqueezer(string1, t)
+	default:
+		t = translator.NewReplacer(string1, string2, t)
+	}
+
+	fmt.Println(string1, string2)
+	var chars []rune
+	if len(args) == minArgs {
+		chars = input.GetChars(os.Stdin)
+		chars = t.Translate(chars)
+		fmt.Println(string(chars))
+	}
 }
