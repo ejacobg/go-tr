@@ -22,9 +22,11 @@ func init() {
 	}
 }
 
-var complement = flag.Bool("c", false, "Complement the set of values specified by string1.")
-var delete = flag.Bool("d", false, "Delete all occurrences of input characters that are specified by string1.")
-var squeeze = flag.Bool("s", false, "Replace instances of repeated characters with a single character.")
+var (
+	complement = flag.Bool("c", false, "Complement the set of values specified by string1.")
+	delete     = flag.Bool("d", false, "Delete all occurrences of input characters that are specified by string1.")
+	squeeze    = flag.Bool("s", false, "Replace instances of repeated characters with a single character.")
+)
 
 func main() {
 	flag.Parse()
