@@ -57,14 +57,30 @@ func TestReplacer(t *testing.T) {
 
 func TestDeleter(t *testing.T) {
 	t.Run("deleter deletes characters", func(t *testing.T) {
-
+		cs := CharSet("1234567890")
+		d := NewDeleter(cs, nil)
+		got := string(d.Translate([]rune("My credit card is: 089765432109")))
+		want := "My credit card is: "
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
 	})
 
-	t.Run("deleter cannot delete", func(t *testing.T) {})
+	t.Run("deleter cannot delete", func(t *testing.T) {
+		cs := CharSet("1234567890")
+		d := NewDeleter(cs, nil)
+		got := string(d.Translate([]rune("My credit card is: ")))
+		want := "My credit card is: "
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
 }
 
 func TestSqueezer(t *testing.T) {
 	t.Run("squeezer squeezes characters", func(t *testing.T) {})
+
+	t.Run("squeezer cannot squeeze", func(t *testing.T) {})
 }
 
 func TestDecorator(t *testing.T) {}
