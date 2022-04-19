@@ -1,0 +1,4 @@
+rot13       A-Za-z  N-ZA-Mn-za-m
+upper       a-z     A-Z
+lower       A-Z     a-z
+printable   " -~"
