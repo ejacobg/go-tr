@@ -22,3 +22,26 @@ func TestComplement(t *testing.T) {
 		}
 	})
 }
+
+func TestReplacer(t *testing.T) {
+	t.Run("replacer does not accept longer 'to' field", func(t *testing.T) {
+		got := NewReplacer(CharSet([]rune("a")), CharSet([]rune("ab")), nil)
+		if got != nil {
+			t.Errorf("got %v, want %v", got, nil)
+		}
+	})
+
+	t.Run("charsets same length", func(t *testing.T) {})
+
+	t.Run("charsets different length", func(t *testing.T) {})
+}
+
+func TestDeleter(t *testing.T) {
+	t.Run("deleter deletes characters", func(t *testing.T) {})
+}
+
+func TestSqueezer(t *testing.T) {
+	t.Run("squeezer squeezes characters", func(t *testing.T) {})
+}
+
+func TestDecorator(t *testing.T) {}
