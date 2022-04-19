@@ -31,7 +31,10 @@ func NewReplacer(from, to CharSet, t Translator) *Replacer {
 	if len(to) > len(from) {
 		return nil
 	}
-	r := &Replacer{t: t}
+	r := &Replacer{t: t, m: make(map[rune]rune)}
+	if len(to) == 0 {
+		return r
+	}
 	for i := range from {
 		if i >= len(to) {
 			r.m[from[i]] = to[len(to)-1]
@@ -62,7 +65,7 @@ type Deleter struct {
 }
 
 func NewDeleter(cs CharSet, t Translator) *Deleter {
-	d := &Deleter{t: t}
+	d := &Deleter{t: t, m: make(map[rune]struct{})}
 	for _, c := range cs {
 		d.m[c] = struct{}{}
 	}
@@ -87,7 +90,7 @@ type Squeezer struct {
 }
 
 func NewSqueezer(cs CharSet, t Translator) *Squeezer {
-	s := &Squeezer{t: t}
+	s := &Squeezer{t: t, m: make(map[rune]struct{})}
 	for _, c := range cs {
 		s.m[c] = struct{}{}
 	}
