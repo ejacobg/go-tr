@@ -25,15 +25,34 @@ func TestComplement(t *testing.T) {
 
 func TestReplacer(t *testing.T) {
 	t.Run("replacer does not accept longer 'to' field", func(t *testing.T) {
-		got := NewReplacer(CharSet([]rune("a")), CharSet([]rune("ab")), nil)
+		from, to := CharSet([]rune("a")), CharSet([]rune("ab"))
+		got := NewReplacer(from, to, nil)
 		if got != nil {
 			t.Errorf("got %v, want %v", got, nil)
 		}
 	})
 
-	t.Run("charsets same length", func(t *testing.T) {})
+	t.Run("charsets same length", func(t *testing.T) {
+		from, to := CharSet([]rune("abcd")), CharSet([]rune("efgh"))
+		r := NewReplacer(from, to, nil)
+		got := string(r.Translate([]rune("abcd")))
+		want := "efgh"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
 
-	t.Run("charsets different length", func(t *testing.T) {})
+	t.Run("charsets different length", func(t *testing.T) {
+		from, to := CharSet([]rune("abcd")), CharSet([]rune("e"))
+		r := NewReplacer(from, to, nil)
+		got := string(r.Translate([]rune("abcd")))
+		want := "eeee"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
+
+	// test empty 'from' and 'to' sets?
 }
 
 func TestDeleter(t *testing.T) {
