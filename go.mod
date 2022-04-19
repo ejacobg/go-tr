@@ -13,3 +13,7 @@ require (
 	input v0.0.0-00010101000000-000000000000
 	translator v0.0.0-00010101000000-000000000000
 )
+
+require it v0.0.0-00010101000000-000000000000 // indirect
+
+replace it => ./test/
