@@ -88,7 +88,15 @@ func TestSqueezer(t *testing.T) {
 		}
 	})
 	
-	t.Run("squeezer cannot squeeze", func(t *testing.T) {})
+	t.Run("squeezer cannot squeeze", func(t *testing.T) {
+		cs := CharSet("a")
+		s := NewSqueezer(cs, nil)
+		got := string(s.Translate([]rune("bbbb")))
+		want := "bbbb"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
 }
 
 func TestDecorator(t *testing.T) {}
