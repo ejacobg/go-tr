@@ -59,6 +59,11 @@ func main() {
 		string1 = string1.Complement()
 	}
 
+	if len(string2) > len(string1) {
+		fmt.Println("string2 is too long.")
+		os.Exit(1)
+	}
+	
 	var t translator.Translator
 	switch {
 	case *delete && *squeeze:
