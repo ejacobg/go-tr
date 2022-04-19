@@ -19,7 +19,7 @@ func (cs *CharSet) Complement() (comp CharSet) {
 }
 
 type Translator interface {
-	Translate(chars []rune) ([]rune, error)
+	Translate(chars []rune) []rune
 }
 
 type Replacer struct {
@@ -27,11 +27,11 @@ type Replacer struct {
 	m map[rune]rune
 }
 
-func NewReplacer(from, to CharSet) *Replacer {
+func NewReplacer(from, to CharSet, t Translator) *Replacer {
 	if len(to) > len(from) {
 		return nil
 	}
-	r := &Replacer{}
+	r := &Replacer{t: t}
 	for i := range from {
 		if i >= len(to) {
 			r.m[from[i]] = to[len(to)-1]
@@ -42,17 +42,43 @@ func NewReplacer(from, to CharSet) *Replacer {
 	return r
 }
 
+func (r *Replacer) Translate(chars []rune) (translated []rune) {
+	if r.t != nil {
+		chars = r.t.Translate(chars)
+	}
+	for _, c := range chars {
+		if val, prs := r.m[c]; prs {
+			translated = append(translated, val)
+		} else {
+			translated = append(translated, c)
+		}
+	}
+	return
+}
+
 type Deleter struct {
 	t Translator
 	m map[rune]struct{}
 }
 
-func NewDeleter(cs CharSet) *Deleter {
-	d := &Deleter{}
+func NewDeleter(cs CharSet, t Translator) *Deleter {
+	d := &Deleter{t: t}
 	for _, c := range cs {
 		d.m[c] = struct{}{}
 	}
 	return d
+}
+
+func (d *Deleter) Translate(chars []rune) (translated []rune) {
+	if d.t != nil {
+		chars = d.t.Translate(chars)
+	}
+	for _, c := range chars {
+		if _, prs := d.m[c]; !prs {
+			translated = append(translated, c)
+		}
+	}
+	return
 }
 
 type Squeezer struct {
@@ -60,10 +86,26 @@ type Squeezer struct {
 	m map[rune]struct{}
 }
 
-func NewSqueezer(cs CharSet) *Squeezer {
-	s := &Squeezer{}
+func NewSqueezer(cs CharSet, t Translator) *Squeezer {
+	s := &Squeezer{t: t}
 	for _, c := range cs {
 		s.m[c] = struct{}{}
 	}
 	return s
+}
+
+func (s *Squeezer) Translate(chars []rune) (translated []rune) {
+	if s.t != nil {
+		chars = s.t.Translate(chars)
+	}
+	for i := 0; i < len(chars); i++ {
+		translated = append(translated, chars[i])
+		if _, prs := s.m[chars[i]]; prs {
+			c := chars[i]
+			for chars[i+1] == c {
+				i++
+			}
+		}
+	}
+	return translated
 }
