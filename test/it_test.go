@@ -51,11 +51,51 @@ func TestParsedTranslators(t *testing.T) {
 	})
 
 	t.Run("squeezer accepts parsed input", func(t *testing.T) {
-
+		inp := []rune("aaaaa")
+		s := translator.NewSqueezer(string1, nil)
+		got := string(s.Translate(inp))
+		want := "a"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
 	})
 
 }
 
 func TestErrorHandling(t *testing.T) {
-	t.Run("empty charsets are handled appropriately", func(t *testing.T) {})
+	empty := strings.NewReader("")
+	nonempty := strings.NewReader("[a-z] ")
+	var string1, string2 translator.CharSet
+	string1, string2 = input.GetChars(empty), input.GetChars(nonempty)
+	string1, string2 = control.Parse(string(string1)), control.Parse(string(string2))
+
+	t.Run("replacer handles empty charsets", func(t *testing.T) {
+		inp := []rune("nothing is changed")
+		tr := translator.NewReplacer(string1, string1,  nil)
+		got := string(tr.Translate(inp))
+		want := "nothing is changed"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
+
+	t.Run("deleter handles empty charsets", func(t *testing.T) {
+		inp := []rune("nothing is changed")
+		d := translator.NewDeleter(string1, nil)
+		got := string(d.Translate(inp))
+		want := "nothing is changed"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
+
+	t.Run("squeezer handles empty charsets", func(t *testing.T) {
+		inp := []rune("aaaa bbbb")
+		s := translator.NewSqueezer(string1, nil)
+		got := string(s.Translate(inp))
+		want := "aaaa bbbb"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
 }
