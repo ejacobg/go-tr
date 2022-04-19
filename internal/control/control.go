@@ -13,7 +13,7 @@ func expand(start, end rune) (expansion []rune) {
 		return
 	}
 	if end < start {
-		return 
+		return
 	}
 	for start <= end {
 		expansion = append(expansion, start)

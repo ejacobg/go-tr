@@ -7,15 +7,15 @@ import (
 
 func TestASCII(t *testing.T) {
 	tests := []rune{
-		0,   // First ASCII character
-		48,  // 0
-		57,  // 9
-		65,  // A
-		90,  // Z
-		97,  // a
-		122, // z
-		127, // Last ASCII character
-		128, // First UTF-8 character
+		0,            // First ASCII character
+		48,           // 0
+		57,           // 9
+		65,           // A
+		90,           // Z
+		97,           // a
+		122,          // z
+		127,          // Last ASCII character
+		128,          // First UTF-8 character
 		'\U0001f600', // 😀
 	}
 
