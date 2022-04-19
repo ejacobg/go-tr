@@ -4,10 +4,9 @@ package input
 import (
 	"bufio"
 	"io"
-	"os"
 )
 
-func GetChars(f *os.File) (chars []rune) {
+func GetChars(f io.Reader) (chars []rune) {
 	r := bufio.NewReader(f)
 	for {
 		char, _, err := r.ReadRune()
