@@ -23,8 +23,47 @@ type Translator interface {
 }
 
 type Replacer struct {
+	t Translator
+	m map[rune]rune
 }
 
-type Deletor map[rune]struct{}
+func NewReplacer(from, to CharSet) *Replacer {
+	if len(to) > len(from) {
+		return nil
+	}
+	r := &Replacer{}
+	for i := range from {
+		if i >= len(to) {
+			r.m[from[i]] = to[len(to)-1]
+		} else {
+			r.m[from[i]] = to[i]
+		}
+	}
+	return r
+}
 
-type Squeezer map[rune]struct{}
+type Deleter struct {
+	t Translator
+	m map[rune]struct{}
+}
+
+func NewDeleter(cs CharSet) *Deleter {
+	d := &Deleter{}
+	for _, c := range cs {
+		d.m[c] = struct{}{}
+	}
+	return d
+}
+
+type Squeezer struct {
+	t Translator
+	m map[rune]struct{}
+}
+
+func NewSqueezer(cs CharSet) *Squeezer {
+	s := &Squeezer{}
+	for _, c := range cs {
+		s.m[c] = struct{}{}
+	}
+	return s
+}
