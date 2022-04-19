@@ -99,4 +99,16 @@ func TestSqueezer(t *testing.T) {
 	})
 }
 
-func TestDecorator(t *testing.T) {}
+func TestDecorator(t *testing.T) {
+	t.Run("replace -> delete -> squeeze", func(t *testing.T) {
+		from, to := CharSet("<>"), CharSet(":")
+		r := NewReplacer(from, to, nil)
+		d := NewDeleter(CharSet("~"), r)
+		s := NewSqueezer(CharSet("|-"), d)
+		got := string(s.Translate([]rune("<||||-~-~-||||>")))
+		want := ":|-|:"
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
+}
