@@ -30,7 +30,6 @@ var (
 
 func main() {
 	flag.Parse()
-	fmt.Println(*complement, *delete, *squeeze)
 	args := flag.Args()
 	//   cds n
 	// 0 000 2
@@ -63,7 +62,7 @@ func main() {
 		fmt.Println("string2 is too long.")
 		os.Exit(1)
 	}
-	
+
 	var t translator.Translator
 	switch {
 	case *delete && *squeeze:
@@ -77,7 +76,6 @@ func main() {
 		t = translator.NewReplacer(string1, string2, t)
 	}
 
-	fmt.Println(string1, string2)
 	var chars []rune
 	if len(args) == minArgs {
 		chars = input.GetChars(os.Stdin)
