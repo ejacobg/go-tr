@@ -31,7 +31,7 @@ func Parse(control string) (arr []rune) {
 			if i == 0 || i == len(runes)-1 {
 				arr = append(arr, c)
 			} else {
-				arr = append(arr[:i-1], expand(runes[i-1], runes[i+1])...)
+				arr = append(arr[:len(arr)-1], expand(runes[i-1], runes[i+1])...)
 				i++
 			}
 		default:
