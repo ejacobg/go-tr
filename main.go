@@ -13,11 +13,12 @@ func init() {
 	flag.Usage = func() {
 		w := flag.CommandLine.Output()
 		fmt.Fprintln(w, "Usage of tr:")
-		fmt.Fprintln(w, "tr [-c] [-s] string1 string2 [files...]")
-		fmt.Fprintln(w, "tr -s [-c] string1 [files...]")
-		fmt.Fprintln(w, "tr -d [-c] string1 [files...]")
-		fmt.Fprintln(w, "tr -d -s [-c] string1 string2 [files...]")
-		fmt.Fprintln(w, "If no files are specified, reads from stdin.")
+		fmt.Fprintln(w, "tr [-c] [-s] string1 string2")
+		fmt.Fprintln(w, "tr -s [-c] string1")
+		fmt.Fprintln(w, "tr -d [-c] string1")
+		fmt.Fprintln(w, "tr -d -s [-c] string1 string2")
+		fmt.Fprintln(w, "After giving arguments, program reads from stdin.")
+		fmt.Fprintln(w, "To submit input, pass in the EOF character.")
 		flag.PrintDefaults()
 	}
 }
@@ -77,9 +78,7 @@ func main() {
 	}
 
 	var chars []rune
-	if len(args) == minArgs {
-		chars = input.GetChars(os.Stdin)
-		chars = t.Translate(chars)
-		fmt.Println(string(chars))
-	}
+	chars = input.GetChars(os.Stdin)
+	chars = t.Translate(chars)
+	fmt.Println(string(chars))
 }
