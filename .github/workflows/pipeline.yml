@@ -16,6 +16,12 @@ jobs:
             - name: test
               run: go test -v control input translator it
 
+            - name: unit test coverage
+              run: go test -cover control input translator
+
+            - name: integration test coverage
+              run: go test it -coverpkg=control,input,translator
+
     deploy:
         runs-on: ubuntu-latest
         needs: [build]
