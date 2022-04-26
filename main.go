@@ -32,15 +32,7 @@ var (
 func main() {
 	flag.Parse()
 	args := flag.Args()
-	//   cds n
-	// 0 000 2
-	// 1 001 1
-	// 2 010 1
-	// 3 011 2
-	// 4 100 2
-	// 5 101 1
-	// 6 110 1
-	// 7 111 2
+	// Only need 2 args if none or both of delete/squeeze flags are set
 	minArgs := 1
 	if *delete == *squeeze {
 		minArgs = 2
