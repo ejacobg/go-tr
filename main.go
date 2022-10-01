@@ -1,12 +1,13 @@
 package main
 
 import (
-	"control"
 	"flag"
 	"fmt"
-	"input"
 	"os"
-	"translator"
+
+	"github.com/ejacobg/go-tr/control"
+	"github.com/ejacobg/go-tr/input"
+	"github.com/ejacobg/go-tr/translator"
 )
 
 func init() {
@@ -25,14 +26,18 @@ func init() {
 
 var (
 	complement = flag.Bool("c", false, "Complement the set of values specified by string1.")
-	delete     = flag.Bool("d", false, "Delete all occurrences of input characters that are specified by string1.")
-	squeeze    = flag.Bool("s", false, "Replace instances of repeated characters with a single character.")
+	delete     = flag.Bool(
+		"d", false, "Delete all occurrences of input characters that are specified by string1.",
+	)
+	squeeze = flag.Bool(
+		"s", false, "Replace instances of repeated characters with a single character.",
+	)
 )
 
 func main() {
 	flag.Parse()
 	args := flag.Args()
-	// Only need 2 args if none or both of delete/squeeze flags are set
+	// Only need 2 args if none or both of delete/squeeze flags are set.
 	minArgs := 1
 	if *delete == *squeeze {
 		minArgs = 2

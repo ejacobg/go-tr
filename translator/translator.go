@@ -3,7 +3,7 @@ package translator
 
 type CharSet []rune
 
-// Complements the set with respect to the ASCII character set.
+// Complement complements the set with respect to the ASCII character set.
 // If the character is outside the ASCII range, then it is removed from the new set.
 func (cs *CharSet) Complement() (comp CharSet) {
 	m := make(map[rune]bool)

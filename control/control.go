@@ -22,7 +22,7 @@ func expand(start, end rune) (expansion []rune) {
 	return
 }
 
-// Generates the character array from a control string.
+// Parse generates the character array from a control string.
 func Parse(control string) (arr []rune) {
 	runes := []rune(control)
 	for i := 0; i < len(runes); i++ {
