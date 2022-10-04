@@ -14,13 +14,13 @@ jobs:
               run: go build -v .
 
             - name: test
-              run: go test -v control input translator it
+              run: go test -v ./...
 
             - name: unit test coverage
-              run: go test -cover control input translator
+              run: go test -cover ./...
 
             - name: integration test coverage
-              run: go test it -coverpkg=control,input,translator
+              run: go test -coverpkg=./...
 
     deploy:
         runs-on: ubuntu-latest
@@ -36,4 +36,4 @@ jobs:
               uses: docker/build-push-action@v2
               with:
                   push: true
-                  tags: quincinia/go-tr:latest
+                  tags: ejacobg/go-tr:latest
