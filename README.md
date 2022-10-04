@@ -19,11 +19,11 @@ To submit input, pass in the EOF character.
   -s    Replace instances of repeated characters with a single character.
 ```
 
-Pull from DockerHub: `docker pull quincinia/go-tr`
+Pull from DockerHub: `docker pull ejacobg/go-tr`
 
-Running the image: `docker run -it quincinia/go-tr [flags] <string1> <string2>`
+Running the image: `docker run -it ejacobg/go-tr [flags] <string1> <string2>`
 
-Running `docker run quincinia/go-tr [-h|-help]` will show the message above.
+Running `docker run ejacobg/go-tr [-h|-help]` will show the message above.
 
 ## Examples
 
@@ -32,15 +32,15 @@ Note: pressing `enter` WILL NOT progress the program. In order to proceed, you m
 ### Capitalize String
 
 ```
-$ docker run -it quincinia/go-tr "a-z" "A-Z"
+$ docker run -it ejacobg/go-tr "a-z" "A-Z"
 the quick brown fox jumped over the lazy dog
 THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG
 ```
 
-### Delete all non-digits
+### Delete All Non-digits
 
 ```
-$ docker run -it quincinia/go-tr -d -c "0-9"
+$ docker run -it ejacobg/go-tr -d -c "0-9"
 my phone is 123-456-7890
 1234567890
 ```
